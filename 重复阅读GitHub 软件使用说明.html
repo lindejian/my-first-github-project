@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub 零基础使用说明</title>
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --text: #1f2328;
+      --muted: #59636e;
+      --border: #d8dee4;
+      --primary: #0969da;
+      --primary-light: #ddf4ff;
+      --green: #1a7f37;
+      --green-light: #dafbe1;
+      --yellow: #9a6700;
+      --yellow-light: #fff8c5;
+      --red: #cf222e;
+      --red-light: #ffebe9;
+      --purple: #8250df;
+      --purple-light: #fbefff;
+      --code-bg: #f6f8fa;
+      --shadow: 0 12px 30px rgba(27, 31, 36, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eef6ff 0%, var(--bg) 280px);
+      line-height: 1.7;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #0d1117 0%, #24292f 55%, #0969da 100%);
+      color: white;
+      padding: 44px 38px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -90px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 999px;
+      font-size: 13px;
+      color: #dbeafe;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 0;
+      color: #dbeafe;
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(27, 31, 36, 0.08);
+    }
+
+    .btn.primary {
+      background: #ffffff;
+      color: #0d1117;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    nav.toc {
+      position: sticky;
+      top: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+    }
+
+    nav.toc h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+
+    nav.toc a {
+      display: block;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    nav.toc a:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 20px;
+    }
+
+    p { margin: 8px 0 14px; }
+
+    .lead {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .tag.green { background: var(--green-light); color: var(--green); }
+    .tag.yellow { background: var(--yellow-light); color: var(--yellow); }
+    .tag.red { background: var(--red-light); color: var(--red); }
+    .tag.purple { background: var(--purple-light); color: var(--purple); }
+
+    .note {
+      border-left: 5px solid var(--primary);
+      background: var(--primary-light);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 14px 0;
+    }
+
+    .warning {
+      border-left: 5px solid var(--yellow);
+      background: var(--yellow-light);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 14px 0;
+    }
+
+    .danger {
+      border-left: 5px solid var(--red);
+      background: var(--red-light);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 14px 0;
+    }
+
+    .success {
+      border-left: 5px solid var(--green);
+      background: var(--green-light);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 14px 0;
+    }
+
+    ol, ul { padding-left: 22px; }
+    li { margin: 8px 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 13px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f6f8fa;
+      font-weight: 800;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: #0d1117;
+      color: #e6edf3;
+      padding: 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      line-height: 1.55;
+      border: 1px solid #30363d;
+    }
+
+    pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .step-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: white;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .checklist label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .checklist label:last-child { border-bottom: none; }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+    }
+
+    .kbd {
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      padding: 1px 6px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .mini-title {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 14px 0;
+    }
+
+    .flow span {
+      background: #f6f8fa;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .flow b {
+      color: var(--muted);
+    }
+
+    footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 24px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      nav.toc { position: static; max-height: none; }
+      .grid.two, .grid.three { grid-template-columns: 1fr; }
+      header.hero { padding: 32px 24px; }
+      section { padding: 22px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header.hero, section, nav.toc { box-shadow: none; }
+      nav.toc, .hero-actions { display: none; }
+      .layout { display: block; }
+      section { page-break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <span class="eyebrow">零基础教程 · 适合完全没有代码经验的人</span>
+      <h1>GitHub 软件使用说明</h1>
+      <p>把 GitHub 当成“带版本记录的项目资料库 + 团队协作平台”。你可以用它保存代码、文档、表格、网页文件，也可以用它记录问题、审核修改、发布简单网站。</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#start">从 30 分钟入门开始</a>
+        <a class="btn" href="#daily">查看日常操作流程</a>
+        <button class="btn" onclick="window.print()">打印 / 另存为 PDF</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="toc">
+        <h2>目录</h2>
+        <a href="#what">1. GitHub 是什么</a>
+        <a href="#terms">2. 必懂术语</a>
+        <a href="#start">3. 30 分钟快速入门</a>
+        <a href="#repo">4. 仓库 Repository</a>
+        <a href="#upload">5. 上传、编辑、删除文件</a>
+        <a href="#version">6. 版本记录 Commit</a>
+        <a href="#team">7. 团队协作：Issue / Branch / PR</a>
+        <a href="#pages">8. GitHub Pages 发布网页</a>
+        <a href="#desktop">9. GitHub Desktop 入门</a>
+        <a href="#command">10. 命令行进阶</a>
+        <a href="#daily">11. 日常使用 SOP</a>
+        <a href="#mistakes">12. 常见错误</a>
+        <a href="#practice">13. 练习任务</a>
+      </nav>
+
+      <main>
+        <section id="what">
+          <h2>1. GitHub 是什么？</h2>
+          <p class="lead">一句话理解：GitHub 是一个在线平台，用来保存项目文件、记录每次修改、多人协作讨论，并且可以发布开源项目或内部项目。</p>
+
+          <div class="grid three">
+            <div class="card">
+              <span class="tag">资料库</span>
+              <h3>像网盘</h3>
+              <p>可以放代码、说明书、图片、网页文件、配置文件等。</p>
+            </div>
+            <div class="card">
+              <span class="tag green">版本记录</span>
+              <h3>比网盘强</h3>
+              <p>每次修改都会留下记录，知道谁改了、改了什么、什么时候改的。</p>
+            </div>
+            <div class="card">
+              <span class="tag purple">团队协作</span>
+              <h3>像项目管理工具</h3>
+              <p>可以提问题、分配任务、审核修改、合并成果。</p>
+            </div>
+          </div>
+
+          <div class="warning">
+            <strong>重要提醒：</strong>GitHub 不等于普通网盘。公开仓库 Public 里的内容别人可以看到；公司内部资料、账号密码、客户信息不要放到公开仓库。
+          </div>
+
+          <h3>Git 和 GitHub 的区别</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>名称</th>
+                <th>你可以怎么理解</th>
+                <th>用途</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Git</strong></td>
+                <td>版本控制工具</td>
+                <td>记录文件修改历史，支持回退、分支、合并。</td>
+              </tr>
+              <tr>
+                <td><strong>GitHub</strong></td>
+                <td>云端平台</td>
+                <td>把 Git 项目放到网上，方便备份、协作、审核、发布。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="terms">
+          <h2>2. 必懂术语：先背这 10 个</h2>
+          <p class="lead">你不需要一开始就会写代码，但这些词必须先看懂。</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>术语</th>
+                <th>中文理解</th>
+                <th>通俗解释</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Repository / Repo</code></td>
+                <td>仓库</td>
+                <td>一个项目的文件夹。例如：一个网站、一个软件、一个说明文档项目。</td>
+              </tr>
+              <tr>
+                <td><code>README.md</code></td>
+                <td>项目说明书</td>
+                <td>仓库首页默认展示的说明文件，通常写项目介绍、使用步骤、注意事项。</td>
+              </tr>
+              <tr>
+                <td><code>Commit</code></td>
+                <td>提交</td>
+                <td>保存一次修改记录。类似“保存一个版本快照”。</td>
+              </tr>
+              <tr>
+                <td><code>Branch</code></td>
+                <td>分支</td>
+                <td>从主线复制出一条修改线，先在分支上改，确认没问题再合并。</td>
+              </tr>
+              <tr>
+                <td><code>Pull Request / PR</code></td>
+                <td>合并请求</td>
+                <td>告诉团队：“我改好了，请检查，没问题就合并到主线。”</td>
+              </tr>
+              <tr>
+                <td><code>Issue</code></td>
+                <td>问题 / 任务</td>
+                <td>用来记录 Bug、需求、待办、反馈。</td>
+              </tr>
+              <tr>
+                <td><code>Clone</code></td>
+                <td>克隆</td>
+                <td>把 GitHub 上的仓库完整下载到自己电脑。</td>
+              </tr>
+              <tr>
+                <td><code>Push</code></td>
+                <td>推送</td>
+                <td>把自己电脑上的修改上传到 GitHub。</td>
+              </tr>
+              <tr>
+                <td><code>Pull</code></td>
+                <td>拉取</td>
+                <td>把 GitHub 上别人更新的内容同步到自己电脑。</td>
+              </tr>
+              <tr>
+                <td><code>Fork</code></td>
+                <td>复制别人的仓库</td>
+                <td>把别人项目复制一份到自己账号里，方便学习或修改。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="start">
+          <h2>3. 30 分钟快速入门：按这个做一遍</h2>
+          <p class="lead">目标：创建一个仓库，上传一个文件，修改说明书，学会查看版本记录。</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>注册 GitHub 账号</h3>
+              <ol>
+                <li>打开 GitHub 官网。</li>
+                <li>点击右上角 <strong>Sign up</strong>。</li>
+                <li>填写邮箱、密码、用户名。</li>
+                <li>进入邮箱完成验证。</li>
+              </ol>
+              <div class="note">用户名建议简短、专业、容易记。公司项目建议用公司统一邮箱注册或加入组织。</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>创建你的第一个仓库</h3>
+              <ol>
+                <li>登录后，点击右上角 <strong>+</strong>。</li>
+                <li>选择 <strong>New repository</strong>。</li>
+                <li>Repository name 填：<code>my-first-github-project</code>。</li>
+                <li>Description 填：<code>我的第一个 GitHub 项目</code>。</li>
+                <li>选择 <strong>Private</strong>，先用私有仓库练习。</li>
+                <li>勾选 <strong>Add a README file</strong>。</li>
+                <li>点击 <strong>Create repository</strong>。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>编辑 README.md</h3>
+              <ol>
+                <li>进入仓库首页，点击 <code>README.md</code>。</li>
+                <li>点击右上角铅笔图标 <strong>Edit this file</strong>。</li>
+                <li>输入下面内容：</li>
+              </ol>
+              <pre><code># 我的第一个 GitHub 项目
+
+这是我学习 GitHub 的练习仓库。
+
+## 我学会了什么
+- 创建仓库
+- 编辑 README
+- 提交 Commit
+- 查看修改历史</code></pre>
+              <ol start="4">
+                <li>页面下方 Commit message 填：<code>更新 README 说明</code>。</li>
+                <li>点击 <strong>Commit changes</strong>。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>上传一个文件</h3>
+              <ol>
+                <li>回到仓库 <strong>Code</strong> 页面。</li>
+                <li>点击 <strong>Add file</strong>。</li>
+                <li>选择 <strong>Upload files</strong>。</li>
+                <li>拖入一个测试文件，例如图片、TXT、HTML。</li>
+                <li>Commit message 填：<code>上传测试文件</code>。</li>
+                <li>点击 <strong>Commit changes</strong>。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">5</div>
+            <div>
+              <h3>查看版本记录</h3>
+              <ol>
+                <li>仓库首页点击右侧或文件列表上方的 <strong>Commits</strong>。</li>
+                <li>你会看到每一次保存记录。</li>
+                <li>点开某一次 Commit，可以看到具体改了哪些内容。</li>
+              </ol>
+              <div class="success"><strong>完成标准：</strong>你已经会创建仓库、编辑文件、上传文件、提交版本、查看历史。</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="repo">
+          <h2>4. 仓库 Repository：项目的“总文件夹”</h2>
+          <p class="lead">一个仓库就是一个项目。建议一个项目一个仓库，不要把所有资料都塞进一个仓库。</p>
+
+          <h3>创建仓库时怎么选？</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>选项</th>
+                <th>建议</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Repository name</td>
+                <td>用英文、小写、短横线</td>
+                <td>例如：<code>amazon-sofa-listing</code>、<code>product-research-template</code>。</td>
+              </tr>
+              <tr>
+                <td>Public</td>
+                <td>开源项目才选</td>
+                <td>别人可以看到，不适合放公司资料。</td>
+              </tr>
+              <tr>
+                <td>Private</td>
+                <td>练习和公司资料优先选</td>
+                <td>只有你和被邀请的人能看。</td>
+              </tr>
+              <tr>
+                <td>Add README</td>
+                <td>建议勾选</td>
+                <td>方便直接在首页写说明。</td>
+              </tr>
+              <tr>
+                <td>.gitignore</td>
+                <td>新手可先不选</td>
+                <td>用于忽略不需要上传的文件。</td>
+              </tr>
+              <tr>
+                <td>License</td>
+                <td>公开项目建议选</td>
+                <td>说明别人能不能使用你的代码或内容。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>推荐仓库结构</h3>
+          <pre><code>my-project/
+├─ README.md              # 项目说明
+├─ docs/                  # 文档资料
+├─ images/                # 图片
+├─ src/                   # 代码文件
+├─ data/                  # 数据文件
+└─ notes/                 # 会议记录、想法</code></pre>
+
+          <div class="note">
+            <strong>命名建议：</strong>文件名尽量用英文，例如 <code>product-research.md</code>，少用空格和特殊符号。这样后续协作、下载、部署网页更稳定。
+          </div>
+        </section>
+
+        <section id="upload">
+          <h2>5. 上传、编辑、删除文件</h2>
+
+          <div class="grid two">
+            <div class="card">
+              <h3>上传文件</h3>
+              <ol>
+                <li>进入仓库首页。</li>
+                <li>点击 <strong>Add file</strong>。</li>
+                <li>选择 <strong>Upload files</strong>。</li>
+                <li>拖拽文件到页面。</li>
+                <li>填写 Commit message。</li>
+                <li>点击 <strong>Commit changes</strong>。</li>
+              </ol>
+            </div>
+            <div class="card">
+              <h3>新建文件</h3>
+              <ol>
+                <li>进入仓库首页。</li>
+                <li>点击 <strong>Add file</strong>。</li>
+                <li>选择 <strong>Create new file</strong>。</li>
+                <li>输入文件名，例如 <code>notes/meeting.md</code>。</li>
+                <li>填写内容并提交。</li>
+              </ol>
+            </div>
+          </div>
+
+          <h3>如何创建文件夹？</h3>
+          <p>GitHub 不是单独点击“新建文件夹”，而是在新建文件时，通过文件名带斜杠来创建。</p>
+          <pre><code>docs/how-to-use.md</code></pre>
+          <p>这表示：创建 <code>docs</code> 文件夹，并在里面创建 <code>how-to-use.md</code> 文件。</p>
+
+          <h3>删除文件</h3>
+          <ol>
+            <li>点开要删除的文件。</li>
+            <li>点击右上角 <strong>...</strong> 或垃圾桶图标。</li>
+            <li>填写删除原因，例如：<code>删除无用测试文件</code>。</li>
+            <li>点击 <strong>Commit changes</strong>。</li>
+          </ol>
+
+          <div class="danger">
+            <strong>注意：</strong>删除文件不是彻底消失，历史版本里仍可能看到旧内容。不要上传密码、密钥、客户资料等敏感信息。
+          </div>
+        </section>
+
+        <section id="version">
+          <h2>6. 版本记录 Commit：GitHub 最重要的能力</h2>
+          <p class="lead">Commit 可以理解为“保存一个版本快照”。每次重要修改都提交一次。</p>
+
+          <h3>好的 Commit message 怎么写？</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>不推荐</th>
+                <th>推荐</th>
+                <th>原因</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>update</td>
+                <td>更新首页产品介绍</td>
+                <td>别人一看就知道改了什么。</td>
+              </tr>
+              <tr>
+                <td>fix</td>
+                <td>修复按钮无法点击的问题</td>
+                <td>明确说明修复对象。</td>
+              </tr>
+              <tr>
+                <td>111</td>
+                <td>新增安装步骤说明</td>
+                <td>方便以后查找历史。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>查看某个文件的历史</h3>
+          <ol>
+            <li>点开某个文件。</li>
+            <li>点击右上或上方的 <strong>History</strong>。</li>
+            <li>选择某次记录，查看前后变化。</li>
+          </ol>
+
+          <h3>什么时候提交一次？</h3>
+          <ul>
+            <li>完成一个小功能时提交。</li>
+            <li>修改一段文案时提交。</li>
+            <li>修复一个问题时提交。</li>
+            <li>不要一天只提交一次超大改动，这样不好检查。</li>
+          </ul>
+        </section>
+
+        <section id="team">
+          <h2>7. 团队协作：Issue / Branch / Pull Request</h2>
+          <p class="lead">团队使用 GitHub 的核心流程是：先记录任务，再开分支修改，最后用 Pull Request 审核合并。</p>
+
+          <div class="flow">
+            <span>Issue 提任务</span><b>→</b>
+            <span>Branch 开分支</span><b>→</b>
+            <span>修改文件</span><b>→</b>
+            <span>Pull Request 审核</span><b>→</b>
+            <span>Merge 合并</span>
+          </div>
+
+          <h3>7.1 Issue：用来记录问题和任务</h3>
+          <p>Issue 适合记录：Bug、需求、待办事项、用户反馈、会议后要做的事。</p>
+          <ol>
+            <li>进入仓库。</li>
+            <li>点击 <strong>Issues</strong>。</li>
+            <li>点击 <strong>New issue</strong>。</li>
+            <li>标题写清楚，例如：<code>首页图片加载太慢</code>。</li>
+            <li>正文写背景、问题、期望结果、截图。</li>
+            <li>可以添加 Assignee 负责人、Labels 标签、Milestone 阶段。</li>
+            <li>点击 <strong>Submit new issue</strong>。</li>
+          </ol>
+
+          <h3>Issue 模板</h3>
+          <pre><code>标题：简短说明问题
+
+背景：
+为什么要做这件事？
+
+现状：
+现在发生了什么？
+
+期望：
+希望变成什么样？
+
+附件：
+截图、链接、文件
+
+负责人：
+@某个人</code></pre>
+
+          <h3>7.2 Branch：分支，避免直接改主线</h3>
+          <p>主分支通常叫 <code>main</code>。不要随便直接改 <code>main</code>。建议每个任务开一个新分支。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>分支名</th>
+                <th>适合场景</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>fix-homepage-image</code></td>
+                <td>修复首页图片问题</td>
+              </tr>
+              <tr>
+                <td><code>add-product-guide</code></td>
+                <td>新增产品说明</td>
+              </tr>
+              <tr>
+                <td><code>update-readme</code></td>
+                <td>更新说明文档</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>7.3 Pull Request：提交给别人检查</h3>
+          <p>Pull Request 简称 PR。它不是“下载请求”，而是“请求把我的修改合并到主线”。</p>
+          <ol>
+            <li>在分支上完成修改。</li>
+            <li>点击 <strong>Compare & pull request</strong>。</li>
+            <li>标题写清楚：<code>修复首页图片加载问题</code>。</li>
+            <li>正文说明改了什么、为什么改、如何测试。</li>
+            <li>邀请同事 Review。</li>
+            <li>确认没问题后点击 <strong>Merge pull request</strong>。</li>
+          </ol>
+
+          <h3>PR 模板</h3>
+          <pre><code>本次修改：
+- 
+
+修改原因：
+- 
+
+测试方式：
+- 
+
+风险点：
+- 
+
+关联 Issue：
+Closes #编号</code></pre>
+
+          <div class="success">
+            <strong>团队最佳实践：</strong>主分支只放确认无误的内容；所有较重要修改都通过分支和 PR 完成。
+          </div>
+        </section>
+
+        <section id="pages">
+          <h2>8. GitHub Pages：发布一个简单网页</h2>
+          <p class="lead">GitHub Pages 可以把仓库里的网页文件发布成一个可访问的网站，适合放说明页、作品集、项目介绍、简单静态网页。</p>
+
+          <h3>方法 A：发布个人主页</h3>
+          <ol>
+            <li>点击右上角 <strong>+</strong> → <strong>New repository</strong>。</li>
+            <li>仓库名必须是：<code>你的用户名.github.io</code>。</li>
+            <li>勾选 <strong>Add README</strong>。</li>
+            <li>创建仓库。</li>
+            <li>进入 <strong>Settings</strong> → <strong>Pages</strong>。</li>
+            <li>Source 选择 <strong>Deploy from a branch</strong>。</li>
+            <li>Branch 选择 <code>main</code>，目录选择 <code>/root</code>。</li>
+            <li>保存后访问：<code>https://你的用户名.github.io</code>。</li>
+          </ol>
+
+          <h3>方法 B：发布普通项目网页</h3>
+          <ol>
+            <li>在仓库根目录创建 <code>index.html</code>。</li>
+            <li>进入 <strong>Settings</strong> → <strong>Pages</strong>。</li>
+            <li>Source 选择 <strong>Deploy from a branch</strong>。</li>
+            <li>Branch 选择 <code>main</code>，目录选择 <code>/root</code>。</li>
+            <li>保存，等待发布完成。</li>
+          </ol>
+
+          <div class="warning">
+            <strong>注意：</strong>GitHub Pages 是静态网站，适合 HTML、CSS、JS。不适合直接运行需要服务器、数据库、后台接口的复杂系统。
+          </div>
+
+          <h3>最简单的 index.html 示例</h3>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;我的第一个网站&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;你好，GitHub Pages！&lt;/h1&gt;
+  &lt;p&gt;这是我发布的第一个网页。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+        <section id="desktop">
+          <h2>9. GitHub Desktop：不用命令行也能同步</h2>
+          <p class="lead">如果你害怕命令行，可以先用 GitHub Desktop。它是图形界面工具，适合新手把仓库下载到电脑、提交修改、推送到 GitHub。</p>
+
+          <h3>基本流程</h3>
+          <ol>
+            <li>下载安装 GitHub Desktop。</li>
+            <li>登录 GitHub 账号。</li>
+            <li>选择 <strong>Clone a repository from the Internet</strong>。</li>
+            <li>选择你的仓库，设置本地保存位置。</li>
+            <li>在电脑文件夹里修改文件。</li>
+            <li>回到 GitHub Desktop，左侧会显示修改内容。</li>
+            <li>左下角填写 Summary，例如：<code>更新产品说明</code>。</li>
+            <li>点击 <strong>Commit to main</strong> 或当前分支。</li>
+            <li>点击 <strong>Push origin</strong> 上传到 GitHub。</li>
+          </ol>
+
+          <h3>GitHub Desktop 常用按钮</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>按钮</th>
+                <th>含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fetch origin</td>
+                <td>检查 GitHub 上有没有新变化。</td>
+              </tr>
+              <tr>
+                <td>Pull origin</td>
+                <td>把 GitHub 上的新变化下载到电脑。</td>
+              </tr>
+              <tr>
+                <td>Push origin</td>
+                <td>把电脑上的提交上传到 GitHub。</td>
+              </tr>
+              <tr>
+                <td>Commit</td>
+                <td>保存一次本地版本记录。</td>
+              </tr>
+              <tr>
+                <td>Current branch</td>
+                <td>查看或切换当前分支。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="command">
+          <h2>10. 命令行进阶：会这几个就够了</h2>
+          <p class="lead">刚开始可以不用命令行。等你熟悉 GitHub 后，再学习下面这些。</p>
+
+          <h3>第一次下载仓库</h3>
+          <pre><code>git clone 仓库地址</code></pre>
+
+          <h3>查看当前修改</h3>
+          <pre><code>git status</code></pre>
+
+          <h3>保存一次修改</h3>
+          <pre><code>git add .
+git commit -m "这里写本次修改说明"</code></pre>
+
+          <h3>上传到 GitHub</h3>
+          <pre><code>git push</code></pre>
+
+          <h3>同步别人更新</h3>
+          <pre><code>git pull</code></pre>
+
+          <h3>完整日常命令流程</h3>
+          <pre><code># 1. 先同步最新内容
+git pull
+
+# 2. 修改文件后，查看状态
+git status
+
+# 3. 添加所有修改
+git add .
+
+# 4. 提交版本记录
+git commit -m "更新说明文档"
+
+# 5. 上传到 GitHub
+git push</code></pre>
+
+          <div class="warning">
+            <strong>新手建议：</strong>不要一上来就强行使用 <code>git reset</code>、<code>git rebase</code>、<code>git push --force</code>，这些命令可能覆盖或改乱历史记录。
+          </div>
+        </section>
+
+        <section id="daily">
+          <h2>11. 日常使用 SOP：照着做就行</h2>
+
+          <h3>个人使用 SOP</h3>
+          <div class="checklist">
+            <label><input type="checkbox"> 打开仓库，先看 README，确认项目说明。</label>
+            <label><input type="checkbox"> 修改文件前，确认自己在哪个分支。</label>
+            <label><input type="checkbox"> 每完成一个小任务，提交一次 Commit。</label>
+            <label><input type="checkbox"> Commit message 写清楚，不要只写 update。</label>
+            <label><input type="checkbox"> 上传前检查有没有敏感信息。</label>
+            <label><input type="checkbox"> 修改完成后查看页面是否正常。</label>
+          </div>
+
+          <h3>团队协作 SOP</h3>
+          <div class="checklist">
+            <label><input type="checkbox"> 先建 Issue，把任务描述清楚。</label>
+            <label><input type="checkbox"> 从 main 新建分支，分支名对应任务。</label>
+            <label><input type="checkbox"> 在分支上修改，不直接改 main。</label>
+            <label><input type="checkbox"> 提交 PR，说明改动、原因、测试方式。</label>
+            <label><input type="checkbox"> 至少一人 Review 后再合并。</label>
+            <label><input type="checkbox"> 合并后关闭对应 Issue。</label>
+          </div>
+
+          <h3>适合你公司的简单协作规则</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>场景</th>
+                <th>建议规则</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>产品资料整理</td>
+                <td>每个产品一个仓库，README 写产品基本信息，docs 放详细文档。</td>
+              </tr>
+              <tr>
+                <td>网页说明书</td>
+                <td>HTML、图片、CSS 放同一个仓库，可用 GitHub Pages 发布。</td>
+              </tr>
+              <tr>
+                <td>多人修改</td>
+                <td>任何重要修改都走 Branch + PR。</td>
+              </tr>
+              <tr>
+                <td>问题反馈</td>
+                <td>统一用 Issue 记录，不要只发微信群，避免后续找不到。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="mistakes">
+          <h2>12. 常见错误和解决办法</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>问题</th>
+                <th>原因</th>
+                <th>解决办法</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>别人看到了我的文件</td>
+                <td>仓库设置成 Public</td>
+                <td>进入 Settings，把仓库改为 Private；敏感信息仍建议更换。</td>
+              </tr>
+              <tr>
+                <td>找不到上传按钮</td>
+                <td>不在仓库 Code 页面</td>
+                <td>进入仓库首页，点击 Code，再找 Add file。</td>
+              </tr>
+              <tr>
+                <td>README 没显示</td>
+                <td>文件名不正确</td>
+                <td>必须叫 <code>README.md</code>，通常放在仓库根目录。</td>
+              </tr>
+              <tr>
+                <td>Pages 网站没更新</td>
+                <td>发布需要等待，或设置错误</td>
+                <td>检查 Settings → Pages 的分支和目录；等待几分钟再刷新。</td>
+              </tr>
+              <tr>
+                <td>PR 不能合并</td>
+                <td>有冲突、检查失败、缺少审核</td>
+                <td>看 PR 页面提示，解决冲突或等待审核通过。</td>
+              </tr>
+              <tr>
+                <td>命令行 push 失败</td>
+                <td>权限、网络、远程地址或本地落后</td>
+                <td>先执行 <code>git pull</code>，确认登录和仓库权限。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="practice">
+          <h2>13. 练习任务：按顺序完成</h2>
+          <p class="lead">完成这些练习后，你就具备 GitHub 基础使用能力。</p>
+
+          <div class="grid two">
+            <div class="card">
+              <h3>练习 1：创建仓库</h3>
+              <ul>
+                <li>创建 Private 仓库。</li>
+                <li>勾选 README。</li>
+                <li>写清楚仓库用途。</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>练习 2：上传文件</h3>
+              <ul>
+                <li>上传一张图片。</li>
+                <li>上传一个 HTML 文件。</li>
+                <li>提交 Commit。</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>练习 3：创建 Issue</h3>
+              <ul>
+                <li>创建一个任务 Issue。</li>
+                <li>添加标题、描述、负责人。</li>
+                <li>添加 Label。</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>练习 4：创建 PR</h3>
+              <ul>
+                <li>新建分支。</li>
+                <li>修改 README。</li>
+                <li>提交 Pull Request。</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>最终你要达到的能力</h3>
+          <div class="success">
+            你能独立完成：创建仓库、上传资料、编辑说明、查看历史、创建任务、开分支、提交 PR、发布简单网页。
+          </div>
+        </section>
+
+        <section id="sources">
+          <h2>参考资料</h2>
+          <p>本说明根据 GitHub 官方文档整理，并用更适合零基础用户的语言重新编写。</p>
+          <ul>
+            <li>GitHub Docs：Quickstart for repositories</li>
+            <li>GitHub Docs：About pull requests</li>
+            <li>GitHub Docs：Quickstart for GitHub Issues</li>
+            <li>GitHub Docs：Quickstart for GitHub Pages</li>
+            <li>GitHub Docs：About branches</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      GitHub 零基础使用说明 · 建议先用 Private 仓库练习，再用于正式项目
+    </footer>
+  </div>
+</body>
+</html>
